@@ -10,31 +10,30 @@ use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
-    protected $rules = [
-        //'image'    => 'mimes:jpeg,png,jpg|max:4096|unique',
-    ];
-
     /**
-     * Laravel doesn't support testing for uniqueness on two columns inside the default validator
-     * so we have to run the check seperately.
-     * 
-     * Just queries the DB for an existing album with the provided title and artist
-     * and if it finds a match the validation fails.
+     * Manually validate input from the create/edit forms
      * 
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    private function validateTitleAndArtistUniqueness($request)
+    private function validateFormInput($request)
     {
         $title = $request->input('title');
         $artist = $request->input('artist');
         
         $validator = Validator::make($request->all(), [
-                'title' => ['required', 'max:60', Rule::unique('albums')->where(function($query) use($title, $artist) {
-                    return $query->where('title', $title)->where('artist', $artist);
-                })],
-                'artist' => ['required', 'max:60'],
-                'image' => ['mimes:jpeg,jpg,png,gif', 'max:2048', 'required']
+            /**
+             * Laravel doesn't support testing for uniqueness on two columns inside the default validator
+             * so we have to run the check seperately.
+             *
+             * Just queries the DB for an existing album with the provided title and artist
+             * and if it finds a match the validation fails.
+             */
+            'title' => ['required', 'max:60', Rule::unique('albums')->where(function($query) use($title, $artist) {
+                return $query->where('title', $title)->where('artist', $artist);
+            })],
+            'artist' => ['required', 'max:60'],
+            'image' => ['mimes:jpeg,jpg,png,gif', 'max:2048', 'required']
             ],
             ['title.unique' => 'Album title and artist must be unique']
         )->validate();
@@ -105,8 +104,7 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, $this->rules);
-        $this->validateTitleAndArtistUniqueness($request);
+        $this->validateFormInput($request);
 
         $album = $request->all();
         $album['image'] = $this->handleImageUpload($request);
@@ -138,13 +136,12 @@ class AlbumController extends Controller
      */
     public function update(Request $request, Album $album)
     {
-        $this->validate($request, $this->rules);
         $title = $request->input('title');
         $artist = $request->input('artist');
 
         // make sure when we check for duplicate album/artist pairs that we aren't checking this album against itself
         if ($title != $album->title || $artist != $album->artist)
-            $this->validateTitleAndArtistUniqueness($request);
+            $this->validateFormInput($request);
         
         $album->title = $title;
         $album->artist = $artist;
