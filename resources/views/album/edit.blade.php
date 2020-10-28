@@ -16,6 +16,7 @@
         @include('album.partials.form')
     {{ Form::close() }}
 
+    <!-- Delete -->
     {{ Form::open(['action' => ['App\Http\Controllers\AlbumController@destroy', $album], 'method' => 'DELETE']) }}
         {{ method_field('DELETE') }}
         {{ Form::button('<span>Delete</span>', ['type' => 'submit', 'onclick' => 'return confirm("Delete this album?")', 'class' => ''])}}

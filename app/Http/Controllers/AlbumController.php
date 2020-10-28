@@ -171,6 +171,11 @@ class AlbumController extends Controller
      */
     public function destroy(Album $album)
     {
+        // delete cover image from storage as long as it isn't the default cover
+        if ($album->image != 'nocover.png')
+            unlink(storage_path('app/public/'. $album->image));
+
+        // delete db record
         $album->delete();
         return redirect('/')->with('success', 'Album Deleted');
     }

@@ -9,10 +9,11 @@
 <!-- Cover Art -->
 @if ($album->image ?? false)
     <div class="album">
+        <label style="color:white">Current Cover Art</label>
         <img src="/storage/{{$album->image}}">
     </div>
 @endif
-{{ Form::label('image', 'Cover Art', ['class' => '']) }}
+{{ Form::label('image', 'Upload New Cover Art', ['class' => '']) }}
 {{ Form::file('image', null, ['class' => '']) }}
 
 <!-- Save -->
