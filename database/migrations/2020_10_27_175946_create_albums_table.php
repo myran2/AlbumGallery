@@ -18,7 +18,7 @@ class CreateAlbumsTable extends Migration
             $table->string('title');
             $table->string('artist');
             $table->unique(['title', 'artist']);
-            $table->string('filename')->unique();
+            $table->string('image')->unique();
             $table->timestamps();
         });
     }

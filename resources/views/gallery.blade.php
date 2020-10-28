@@ -9,7 +9,7 @@
     @foreach ($albums as $album)
     <div class="album">
         <a href="/album/{{$album->id}}/edit">
-            <img src="img/{{$album->filename}}">
+            <img src="storage/{{$album->image}}">
             <label>{{$album->artist}} - {{$album->title}}</label>
         </a>
     </div>

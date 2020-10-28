@@ -12,7 +12,7 @@
 <div class='content'>
     <h2>Editing "{{$album->title}}"</h2>
 
-    {{ Form::model($album, ['action' => ['App\Http\Controllers\AlbumController@update', $album], 'method' => 'PUT']) }}
+    {{ Form::model($album, ['action' => ['App\Http\Controllers\AlbumController@update', $album], 'method' => 'PUT', 'files' => true]) }}
         @include('album.partials.form')
     {{ Form::close() }}
 

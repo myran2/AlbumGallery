@@ -7,13 +7,13 @@
 {{ Form::text('artist', null, ['class' => '']) }}
 
 <!-- Cover Art -->
-@if ($album->filename ?? false)
+@if ($album->image ?? false)
     <div class="album">
-        <img src="/img/{{$album->filename}}">
+        <img src="/img/{{$album->image}}">
     </div>
 @endif
-{{ Form::label('filename', 'Cover Art', ['class' => '']) }}
-{{ Form::text('filename', null, ['class' => '']) }}
+{{ Form::label('image', 'Cover Art', ['class' => '']) }}
+{{ Form::file('image', null, ['class' => '']) }}
 
 <!-- Save -->
 {{Form::button('<span>Save</span>', ['type' => 'submit', 'class' => ''])}}

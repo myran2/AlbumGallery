@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\GalleryController;
-//use App\Http\Controllers\AlbumController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'App\Http\Controllers\GalleryController@index');
+Route::get('/', 'App\Http\Controllers\AlbumController@index');
 
 Route::resource('/album', 'App\Http\Controllers\AlbumController');

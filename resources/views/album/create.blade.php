@@ -12,7 +12,7 @@
 <div class='content'>
     <h2>Add an Album</h2>
 
-    {{ Form::model(new App\Models\Album, ['action' => ['App\Http\Controllers\AlbumController@store']]) }}
+    {{ Form::model(new App\Models\Album, ['action' => ['App\Http\Controllers\AlbumController@store'], 'files' => true]) }}
         @include('album.partials.form')
     {{ Form::close() }}
 </div>
