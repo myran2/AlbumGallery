@@ -7,8 +7,9 @@ html {
 
 header {
     display: flex;
+    flex-flow: column wrap;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     background-color: #106f62;
     color: white;
     height: 7em;
@@ -84,6 +85,7 @@ header h1 {
 .album {
     flex: 0;
     margin: 20px;
+    width: 300px;
 }
 
 .album a {
@@ -99,9 +101,9 @@ header h1 {
 }
 
 .album img {
-    max-height: 300px;
-    max-width: 300px;
-    object-position: center;
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
 }
 
 footer {

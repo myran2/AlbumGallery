@@ -33,7 +33,7 @@ class AlbumController extends Controller
                 return $query->where('title', $title)->where('artist', $artist);
             })],
             'artist' => ['required', 'max:60'],
-            'image' => ['mimes:jpeg,jpg,png,gif', 'max:2048', 'required']
+            'image' => ['mimes:jpeg,jpg,png,gif', 'max:2048']
             ],
             ['title.unique' => 'Album title and artist must be unique']
         )->validate();
@@ -57,6 +57,10 @@ class AlbumController extends Controller
      */
     private function handleImageUpload($request)
     {
+        // image is empty
+        if (!$request->hasFile('image'))
+            return '';
+
         $fullpath = $request->file('image')->store('public');
         return explode('/', $fullpath)[1];
     }
@@ -107,7 +111,11 @@ class AlbumController extends Controller
         $this->validateFormInput($request);
 
         $album = $request->all();
-        $album['image'] = $this->handleImageUpload($request);
+        $img = $this->handleImageUpload($request);
+        if ($img == '')
+            $album['image'] = 'nocover.png';
+        else
+            $album['image'] = $img;
 
         Album::create($album);
         return redirect('/')->with('success', 'Album created');
@@ -145,7 +153,11 @@ class AlbumController extends Controller
         
         $album->title = $title;
         $album->artist = $artist;
-        $album->image = $this->handleImageUpload($request);
+
+        // if user doesn't specify a new album cover, just use the old one
+        $img = $this->handleImageUpload($request);
+        if ($img != '')
+            $album->image = $img;
 
         $album->save();
         return redirect('/')->with('success', 'Album Updated');

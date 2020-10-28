@@ -9,7 +9,7 @@
 <!-- Cover Art -->
 @if ($album->image ?? false)
     <div class="album">
-        <img src="/img/{{$album->image}}">
+        <img src="/storage/{{$album->image}}">
     </div>
 @endif
 {{ Form::label('image', 'Cover Art', ['class' => '']) }}
