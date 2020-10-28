@@ -1,0 +1,23 @@
+.content {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.album {
+    flex: 0;
+    margin: 20px;
+}
+
+.album a {
+    text-decoration: none;
+}
+
+.album label {
+    margin-top: 7px;
+    display: block;
+    text-align: center;
+    color: #02564a;
+    font-weight: 700;
+}
