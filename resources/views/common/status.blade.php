@@ -1,17 +1,13 @@
 @if (Session::has('success'))
-    <div class="flash alert alert-success" role="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <p>{{ Session::get('success') }}</p>
+    <div class="alert alert-success active" role="alert" onclick="hideElement(this)">
+        <p>{{ Session::get('success') }} (Click to Dismiss)</p>
     </div>
 @endif
 
 @if ($errors->any())
-    <div class="flash alert alert-danger" role="alert">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <div class="alert alert-fail active" role="alert" onclick="hideElement(this)">
         @foreach ( $errors->all() as $error )
-            <p>
-                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <span class="sr-only">Error:</span> {{ $error }}
-            </p>
+            <p>Error: {{ $error }} (Click to Dismiss)</p>
         @endforeach
     </div>
 @endif

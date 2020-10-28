@@ -23,7 +23,7 @@ class AlbumController extends Controller
      * Just queries the DB for an existing album with the provided title and artist
      * and if it finds a match the validation fails.
      */
-    private function validateTitleAndArtistUniqueness($title, $artist)
+    private function validateTitleAndArtistUniqueness($request, $title, $artist)
     {
         $validator = Validator::make($request->all(), [
             'title' => Rule::unique('albums')->where(function($query) use($title, $artist) {
@@ -65,7 +65,7 @@ class AlbumController extends Controller
         $title = $request->input('title');
         $artist = $request->input('artist');
 
-        validateTitleAndArtistUniqueness($title, $artist);
+        $this->validateTitleAndArtistUniqueness($request, $title, $artist);
 
         $album = $request->all();
         Album::create($album);
@@ -97,8 +97,12 @@ class AlbumController extends Controller
     public function update(Request $request, Album $album)
     {
         $this->validate($request, $this->rules);
+        $title = $request->input('title');
+        $artist = $request->input('artist');
 
-        validateTitleAndArtistUniqueness($title, $artist);
+        // make sure the "duplicate" album isn't the album we're trying to save
+        if ($title != $album->title || $artist != $album->artist)
+            $this->validateTitleAndArtistUniqueness($request, $title, $artist);
 
         $album->title = $request->input('title');
         $album->artist = $request->input('artist');

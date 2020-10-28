@@ -20,8 +20,13 @@
             </div>
         </header>
         @yield('content')
-         <footer>
-            Henry Gordon's code test for Atlas Networks
-         </footer>
+        <footer>
+        Henry Gordon's code test for Atlas Networks
+        </footer>
+        <script>
+            function hideElement(element) {
+                element.classList.remove('active');
+            }
+        </script>
     </body>
 </html>
